@@ -30,7 +30,8 @@ class EntryAdmin(admin.ModelAdmin):
     form = EntryAdminForm
     date_hierarchy = 'creation_date'
     fieldsets = ((_('Content'), {'fields': ('title', 'content',
-                                            'image', 'status')}),
+                                            'image', 'status',
+                                            'content_markup',)}),
                  (_('Options'), {'fields': ('featured', 'excerpt',
                                             'content_template',
                                             'detail_template',

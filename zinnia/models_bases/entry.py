@@ -161,13 +161,25 @@ class ContentEntry(models.Model):
     Abstract content model class providing field
     and methods to write content inside an entry.
     """
+    MARKUP_CHOICES = (
+            (1,'markdown'),
+            (2,'textile'),
+            (3,'restructuredtext'),
+            (4,'html'),
+            )
+
     content = models.TextField(_('content'), blank=True)
+    content_markup = models.PositiveIntegerField(_('Markup'),
+            help_text=_('Markup language for content'),
+            default=1,
+            choices = MARKUP_CHOICES)
 
     @property
     def html_content(self):
         """
         Returns the "content" field formatted in HTML.
         """
+        MARKUP_LANGUAGE = self.get_content_markup_display()
         if MARKUP_LANGUAGE == 'markdown':
             return markdown(self.content, MARKDOWN_EXTENSIONS)
         elif MARKUP_LANGUAGE == 'textile':
